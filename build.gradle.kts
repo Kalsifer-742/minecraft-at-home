@@ -17,5 +17,5 @@ javafx {
 }
 
 application {
-    mainClass = "org.unitn.minecraft.Main"
+    mainClass = "dev.kalsifer.minecraft.Main"
 }
