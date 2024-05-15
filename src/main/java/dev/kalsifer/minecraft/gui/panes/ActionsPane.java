@@ -1,14 +1,17 @@
-package dev.kalsifer.minecraft.gui;
+package dev.kalsifer.minecraft.gui.panes;
 
+import dev.kalsifer.minecraft.gui.controllers.MainController;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
-public class Actions extends GridPane {
-    public Actions() {
+public class ActionsPane extends GridPane {
+    MainController mainController;
+
+    public ActionsPane(MainController mainController) {
         super();
 
-        this.draw();
+        this.mainController = mainController;
     }
 
     private void draw() {

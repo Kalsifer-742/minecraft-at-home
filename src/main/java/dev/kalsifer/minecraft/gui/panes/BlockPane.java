@@ -1,7 +1,5 @@
-package dev.kalsifer.minecraft.gui;
+package dev.kalsifer.minecraft.gui.panes;
 
-import dev.kalsifer.minecraft.blocks.BlockFactory;
-import dev.kalsifer.minecraft.blocks.NullBlock;
 import dev.kalsifer.minecraft.inventory.BlockComparator;
 import javafx.scene.layout.StackPane;
 import dev.kalsifer.minecraft.blocks.interfaces.Block;

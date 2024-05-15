@@ -3,12 +3,11 @@ package dev.kalsifer.minecraft.map;
 import dev.kalsifer.minecraft.blocks.exceptions.BlockIsNotPickableException;
 import dev.kalsifer.minecraft.blocks.*;
 import dev.kalsifer.minecraft.blocks.interfaces.Block;
-import dev.kalsifer.minecraft.gui.BlockPane;
 import javafx.scene.layout.GridPane;
 
 import java.util.Random;
 
-public class Map extends GridPane {
+public class Map {
     private final Block[][] blocks;
     private final int size;
 
@@ -33,16 +32,14 @@ public class Map extends GridPane {
             } catch (CoordinateOutOfBoundException ignored) {}
         }
         this.addRowOfWater();
-
-        this.draw();
     }
 
-    public void draw() {
-        for (int y = this.size - 1; y > -1 ; y--) {
-            for (int x = 0; x < this.size; x++) {
-                super.add(new BlockPane(this.blocks[x][y]), x, this.size - y);
-            }
-        }
+    public int getSize() {
+        return this.size;
+    }
+
+    public Block[][] getBlocks() {
+        return this.blocks;
     }
 
     private boolean isCoordinateValid(Coordinate coord) {

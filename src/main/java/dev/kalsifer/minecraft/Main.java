@@ -1,6 +1,8 @@
 package dev.kalsifer.minecraft;
 
 import dev.kalsifer.minecraft.game.Game;
+import dev.kalsifer.minecraft.gui.GUI;
+import dev.kalsifer.minecraft.gui.controllers.MainController;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -13,9 +15,10 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Game game = new Game();
+        MainController mainController = new MainController(new Game());
+        GUI layout = mainController.getGui();
 
-        Scene scene = new Scene(game);
+        Scene scene = new Scene(layout);
 
         stage.setScene(scene);
         stage.setTitle("Minecraft at home");

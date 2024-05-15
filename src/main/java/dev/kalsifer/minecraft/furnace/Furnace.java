@@ -3,23 +3,18 @@ package dev.kalsifer.minecraft.furnace;
 import dev.kalsifer.minecraft.blocks.BlockFactory;
 import dev.kalsifer.minecraft.blocks.interfaces.Block;
 import dev.kalsifer.minecraft.blocks.interfaces.SmeltableBlock;
-import dev.kalsifer.minecraft.gui.BlockPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 
-public class Furnace extends VBox {
+public class Furnace {
     SmeltableBlock input;
     Block output;
 
     public Furnace() {
-        super();
-
         this.input = BlockFactory.nullBlock();
         this.output = BlockFactory.nullBlock();
+    }
 
-        this.draw();
+    public SmeltableBlock getInput() {
+        return this.input;
     }
 
     public void setInput(SmeltableBlock input) {
@@ -27,23 +22,13 @@ public class Furnace extends VBox {
     }
 
     public Block getOutput() {
-        Block block = this.output;
-        this.output = BlockFactory.nullBlock();
-        return block;
+        return this.output;
     }
 
-    public void draw() {
-        Text text = new Text("Furnace");
-        HBox layout = new HBox();
-
-        layout.getChildren().addAll(
-            new BlockPane(this.input),
-            new Text("==>"),
-            new BlockPane(this.output)
-        );
-
-        super.getChildren().add(text);
-        super.getChildren().add(layout);
+    public Block removeOutput() {
+        Block tmp = this.output;
+        this.output = BlockFactory.nullBlock();
+        return tmp;
     }
 
     public void smelt() {
