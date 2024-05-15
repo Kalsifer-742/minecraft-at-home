@@ -6,27 +6,41 @@ import dev.kalsifer.minecraft.blocks.exceptions.BlockIsNotSmeltableException;
 import dev.kalsifer.minecraft.blocks.interfaces.Block;
 import dev.kalsifer.minecraft.furnace.Furnace;
 import dev.kalsifer.minecraft.blocks.interfaces.SmeltableBlock;
-import dev.kalsifer.minecraft.gui.GUI;
+import dev.kalsifer.minecraft.gui.Actions;
 import dev.kalsifer.minecraft.inventory.Inventory;
 import dev.kalsifer.minecraft.map.Coordinate;
 import dev.kalsifer.minecraft.map.CoordinateOutOfBoundException;
 import dev.kalsifer.minecraft.map.Map;
+import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 
-public class Game {
+public class Game extends Pane {
     Map map;
     Furnace furnace;
     Inventory inventory;
-    GUI gui;
 
     public Game() {
+        super();
         this.map = new Map(5);
         this.furnace = BlockFactory.furnaceBlock();
         this.inventory = new Inventory();
-        this.gui = new GUI(this.map, this.furnace, this.inventory);
+
+        this.draw();
     }
 
-    public void display() {
-        this.gui.display();
+    public void draw() {
+        VBox ui = new VBox();
+        ui.getChildren().addAll(this.furnace, this.inventory);
+
+        HBox map_ui = new HBox();
+        map_ui.getChildren().addAll(this.map, ui);
+
+        VBox root = new VBox();
+        root.getChildren().addAll(map_ui, new Actions());
+
+        super.getChildren().add(root);
     }
 
     public void insertBlockAtCoords(Coordinate coord, Block block) {
@@ -73,10 +87,5 @@ public class Game {
         }
 
         this.inventory.addBlock(block);
-    }
-
-    public void test() {
-        this.display();
-        System.out.println("All test PASSED");
     }
 }
