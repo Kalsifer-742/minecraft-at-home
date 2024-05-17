@@ -10,20 +10,18 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 public class GUI extends Pane {
-    MapPane mapPane;
-    FurnacePane furnacePane;
-    InventoryPane inventoryPane;
-
-    //actions
-    MainController mainController;
+    final MapPane mapPane;
+    final FurnacePane furnacePane;
+    final InventoryPane inventoryPane;
+    final ActionsPane actionsPane;
 
     public GUI(MainController mainController) {
+        super();
+
         mapPane = new MapPane();
         furnacePane = new FurnacePane();
         inventoryPane = new InventoryPane();
-
-        //actions
-        this.mainController = mainController;
+        actionsPane = new ActionsPane(mainController);
 
         draw();
     }
@@ -47,9 +45,8 @@ public class GUI extends Pane {
         HBox map_ui = new HBox();
         map_ui.getChildren().addAll(mapPane, ui);
 
-        //actions
         VBox root = new VBox();
-        root.getChildren().addAll(map_ui, new ActionsPane(mainController));
+        root.getChildren().addAll(map_ui, actionsPane);
 
         getChildren().add(root);
     }

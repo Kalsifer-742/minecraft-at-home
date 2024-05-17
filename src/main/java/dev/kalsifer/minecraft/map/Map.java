@@ -3,7 +3,6 @@ package dev.kalsifer.minecraft.map;
 import dev.kalsifer.minecraft.blocks.exceptions.BlockIsNotPickableException;
 import dev.kalsifer.minecraft.blocks.*;
 import dev.kalsifer.minecraft.blocks.interfaces.Block;
-import javafx.scene.layout.GridPane;
 
 import java.util.Random;
 

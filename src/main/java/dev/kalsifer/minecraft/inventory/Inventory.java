@@ -1,10 +1,6 @@
 package dev.kalsifer.minecraft.inventory;
 
 import dev.kalsifer.minecraft.blocks.interfaces.Block;
-import dev.kalsifer.minecraft.gui.panes.BlockPane;
-import javafx.scene.layout.TilePane;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 
 import java.util.ArrayList;
 import java.util.Iterator;

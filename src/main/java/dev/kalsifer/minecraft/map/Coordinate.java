@@ -1,7 +1,8 @@
 package dev.kalsifer.minecraft.map;
 
 public class Coordinate {
-    public int x, y;
+    public final int x;
+    public final int y;
 
     public Coordinate(int x, int y) {
         this.x = x;

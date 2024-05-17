@@ -8,7 +8,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
 public class BlockPane extends StackPane {
-    Block block;
+    final Block block;
 
     public BlockPane(Block block) {
         super();

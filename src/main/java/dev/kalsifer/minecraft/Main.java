@@ -14,7 +14,7 @@ public class Main extends Application {
     }
 
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) {
         MainController mainController = new MainController(new Game());
         GUI layout = mainController.getGui();
 
@@ -27,3 +27,10 @@ public class Main extends Application {
         stage.show();
     }
 }
+
+/*
+- gui interagibile tramite click e non tramite bottoni
+- mining dei blocchi con cambio dell'opacità
+- possibilità di usare il pugno o il piccone
+- blocco torcia che funziona sulla sabbia
+ */

@@ -1,23 +1,24 @@
 package dev.kalsifer.minecraft.gui.controllers;
 
 import dev.kalsifer.minecraft.blocks.BlockFactory;
-import dev.kalsifer.minecraft.blocks.SandBlock;
+import dev.kalsifer.minecraft.blocks.exceptions.BlockIsNotPickableException;
 import dev.kalsifer.minecraft.blocks.exceptions.BlockIsNotSmeltableException;
 import dev.kalsifer.minecraft.blocks.interfaces.Block;
 import dev.kalsifer.minecraft.game.Game;
 import dev.kalsifer.minecraft.gui.GUI;
 import dev.kalsifer.minecraft.map.Coordinate;
+import dev.kalsifer.minecraft.map.CoordinateOutOfBoundException;
+import javafx.scene.control.Alert;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 public class MainController implements SimpleController {
-    Game game;
-    GUI gui;
-    ArrayList<SimpleController> controllerList;
-    MapController mapController;
-    FurnaceController furnaceController;
-    InventoryController inventoryController;
+    final Game game;
+    final GUI gui;
+    final ArrayList<SimpleController> controllerList;
+    final MapController mapController;
+    final FurnaceController furnaceController;
+    final InventoryController inventoryController;
 
     public MainController(Game game){
         this.game = game;
@@ -43,12 +44,20 @@ public class MainController implements SimpleController {
     }
 
     public void insertBlockAtCoords(Coordinate coord, Block block) {
-        game.insertBlockAtCoords(coord, BlockFactory.sandBlock());
+        try {
+            game.insertBlockAtCoords(coord, BlockFactory.sandBlock());
+        } catch (CoordinateOutOfBoundException e) {
+            new Alert(Alert.AlertType.WARNING, e.getMessage()).show();
+        }
         redraw();
     }
 
-    public void moveFromInventoryToFurnace(int index) throws BlockIsNotSmeltableException {
-        game.moveFromInventoryToFurnace(index);
+    public void moveFromInventoryToFurnace(int index) {
+        try {
+            game.moveFromInventoryToFurnace(index);
+        } catch (BlockIsNotSmeltableException e) {
+            new Alert(Alert.AlertType.WARNING, e.getMessage()).show();
+        }
         redraw();
     }
 
@@ -63,7 +72,12 @@ public class MainController implements SimpleController {
     }
 
     public void pickUpBlock(Coordinate coord) {
-        game.pickUpBlock(coord);
+        try {
+            game.pickUpBlock(coord);
+        } catch (CoordinateOutOfBoundException | BlockIsNotPickableException e) {
+            new Alert(Alert.AlertType.WARNING, e.getMessage()).show();
+        }
+
         redraw();
     }
 }

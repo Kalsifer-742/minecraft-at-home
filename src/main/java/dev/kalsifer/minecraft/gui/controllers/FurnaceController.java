@@ -4,8 +4,8 @@ import dev.kalsifer.minecraft.furnace.Furnace;
 import dev.kalsifer.minecraft.gui.panes.FurnacePane;
 
 public class FurnaceController implements SimpleController {
-    Furnace furnace;
-    FurnacePane furnacePane;
+    final Furnace furnace;
+    final FurnacePane furnacePane;
 
     public FurnaceController(Furnace furnace, FurnacePane furnacePane) {
         this.furnace = furnace;
@@ -16,7 +16,7 @@ public class FurnaceController implements SimpleController {
 
     @Override
     public void redraw() {
-        furnacePane.getChildren().removeAll();
+        furnacePane.getChildren().clear();
         furnacePane.draw(this.furnace.getInput(), this.furnace.getOutput());
     }
 }

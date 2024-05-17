@@ -10,12 +10,11 @@ import dev.kalsifer.minecraft.inventory.Inventory;
 import dev.kalsifer.minecraft.map.Coordinate;
 import dev.kalsifer.minecraft.map.CoordinateOutOfBoundException;
 import dev.kalsifer.minecraft.map.Map;
-import javafx.scene.layout.Pane;
 
 public class Game {
-    Map map;
-    Furnace furnace;
-    Inventory inventory;
+    final Map map;
+    final Furnace furnace;
+    final Inventory inventory;
 
     public Game() {
         super();
@@ -36,48 +35,31 @@ public class Game {
         return inventory;
     }
 
-    public void insertBlockAtCoords(Coordinate coord, Block block) {
-        try {
-            this.map.insertBlockAtCoords(coord, block);
-        } catch (CoordinateOutOfBoundException e) {
-            System.err.println(e);
-        }
+    public void insertBlockAtCoords(Coordinate coord, Block block) throws CoordinateOutOfBoundException {
+        this.map.insertBlockAtCoords(coord, block);
     }
 
     public void smelt() {
         this.furnace.smelt();
     }
 
-    public void moveFromInventoryToFurnace(int index) throws BlockIsNotSmeltableException {
-        Block block;
-
-        try {
-            block = this.inventory.removeBlock(index);
-        } catch (IndexOutOfBoundsException e) {
-            System.err.println(e);
-            return;
-        }
+    public void moveFromInventoryToFurnace(int index) throws IndexOutOfBoundsException, BlockIsNotSmeltableException {
+        Block block = this.inventory.removeBlock(index);
 
         if (!(block instanceof SmeltableBlock)) {
             throw new BlockIsNotSmeltableException();
         }
+
         this.furnace.setInput((SmeltableBlock) block);
     }
 
     public void moveFromFurnaceToInventory() {
-        Block block = this.furnace.getOutput();
+        Block block = this.furnace.removeOutput();
         this.inventory.addBlock(block);
     }
 
-    public void pickUpBlock(Coordinate coord) {
-        Block block;
-
-        try {
-            block = this.map.removeBlockAtCoord(coord);
-        } catch (CoordinateOutOfBoundException | BlockIsNotPickableException e) {
-            System.err.println(e);
-            return;
-        }
+    public void pickUpBlock(Coordinate coord) throws CoordinateOutOfBoundException, BlockIsNotPickableException {
+        Block block = this.map.removeBlockAtCoord(coord);
 
         this.inventory.addBlock(block);
     }

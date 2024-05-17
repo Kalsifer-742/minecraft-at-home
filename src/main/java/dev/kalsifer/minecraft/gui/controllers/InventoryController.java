@@ -4,8 +4,8 @@ import dev.kalsifer.minecraft.gui.panes.InventoryPane;
 import dev.kalsifer.minecraft.inventory.Inventory;
 
 public class InventoryController implements SimpleController {
-    Inventory inventory;
-    InventoryPane inventoryPane;
+    final Inventory inventory;
+    final InventoryPane inventoryPane;
 
     public InventoryController(Inventory inventory, InventoryPane inventoryPane) {
         this.inventory = inventory;
@@ -16,7 +16,7 @@ public class InventoryController implements SimpleController {
 
     @Override
     public void redraw() {
-        inventoryPane.getChildren().removeAll();
+        inventoryPane.getChildren().clear();
         inventoryPane.draw(this.inventory.getBlocksIterator());
     }
 }

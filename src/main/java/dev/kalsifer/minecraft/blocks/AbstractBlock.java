@@ -37,9 +37,4 @@ public class AbstractBlock implements Block {
     public String toString() {
         return this.blockName + " [" + this.content + "]";
     }
-
-    @Override
-    public String displayInInventory() {
-        return "[" + this.content + "]";
-    }
 }
