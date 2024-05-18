@@ -4,5 +4,4 @@ public interface Block {
     boolean doBlocksFallThrough();
     boolean doFallsWithGravity();
     boolean isPickable();
-    char display();
 }

@@ -7,9 +7,12 @@ import dev.kalsifer.minecraft.blocks.interfaces.Block;
 import dev.kalsifer.minecraft.furnace.Furnace;
 import dev.kalsifer.minecraft.blocks.interfaces.SmeltableBlock;
 import dev.kalsifer.minecraft.inventory.Inventory;
+import dev.kalsifer.minecraft.inventory.InventoryIsFullException;
 import dev.kalsifer.minecraft.map.Coordinate;
 import dev.kalsifer.minecraft.map.CoordinateOutOfBoundException;
 import dev.kalsifer.minecraft.map.Map;
+
+import java.util.Collection;
 
 public class Game {
     final Map map;
@@ -18,7 +21,7 @@ public class Game {
 
     public Game() {
         super();
-        this.map = new Map(5);
+        this.map = new Map(8);
         this.furnace = BlockFactory.furnaceBlock();
         this.inventory = new Inventory();
     }
@@ -53,14 +56,18 @@ public class Game {
         this.furnace.setInput((SmeltableBlock) block);
     }
 
-    public void moveFromFurnaceToInventory() {
+    public void moveFromFurnaceToInventory() throws InventoryIsFullException {
         Block block = this.furnace.removeOutput();
         this.inventory.addBlock(block);
     }
 
-    public void pickUpBlock(Coordinate coord) throws CoordinateOutOfBoundException, BlockIsNotPickableException {
-        Block block = this.map.removeBlockAtCoord(coord);
+    public void pickUpBlock(Coordinate coord) throws CoordinateOutOfBoundException, BlockIsNotPickableException, InventoryIsFullException {
+        if (inventory.getSize() >= 8) {
+            throw new InventoryIsFullException();
+        }
 
-        this.inventory.addBlock(block);
+        Block block = map.removeBlockAtCoord(coord);
+
+        inventory.addBlock(block);
     }
 }

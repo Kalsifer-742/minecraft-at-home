@@ -1,11 +1,12 @@
 package dev.kalsifer.minecraft.gui.panes;
 
-import dev.kalsifer.minecraft.inventory.BlockComparator;
-import javafx.scene.layout.StackPane;
+import dev.kalsifer.minecraft.blocks.*;
+import dev.kalsifer.minecraft.blocks.interfaces.IronBlockInterface;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
 import dev.kalsifer.minecraft.blocks.interfaces.Block;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
 
 public class BlockPane extends StackPane {
     final Block block;
@@ -14,37 +15,41 @@ public class BlockPane extends StackPane {
         super();
         this.block = block;
 
-        Rectangle background = new Rectangle(100, 100, getBlockColor(this.block));
-        Text text = new Text("" + this.block.display());
-
-        super.getChildren().add(background);
-        super.getChildren().add(text);
+        draw();
     }
 
-    private Color getBlockColor(Block block) {
-        int block_code = BlockComparator.blockValue(block);
+    public void draw() {
+        setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, null, new BorderWidths(0.8))));
 
-        if (block_code == 0) {
-            return Color.BLACK;
+        ImageView imageView = new ImageView(getBlockTexture(block));
+        imageView.setFitWidth(64);
+        imageView.setFitHeight(64);
+        imageView.setPreserveRatio(true);
+
+        getChildren().add(imageView);
+    }
+
+    public Image getBlockTexture(Block block) {
+        Image image;
+
+        if (block instanceof AirBlock) {
+            image = new Image("file:assets/light_blue_concrete.png");
+        } else if (block instanceof WaterBlock) {
+            image = new Image("file:assets/underwater.png");
+        } else if (block instanceof SandBlock) {
+            image = new Image("file:assets/sand.png");
+        } else if (block instanceof RawIronBlock) {
+            image = new Image("file:assets/raw_iron_block.png");
+        } else if (block instanceof GlassBlock) {
+            image = new Image("file:assets/glass.png");
+        } else if (block instanceof IronBlockInterface) {
+            image = new Image("file:assets/iron_block.png");
+        } else if (block instanceof TorchBlock) {
+            image = new Image("file:assets/torch.png");
+        } else {
+            image = new Image("file:assets/empty_slot_ingot.png");
         }
-        if (block_code == 1) {
-            return Color.LIGHTGRAY;
-        }
-        if (block_code == 2) {
-            return Color.BLUE;
-        }
-        if (block_code == 3) {
-            return Color.YELLOW;
-        }
-        if (block_code == 4) {
-            return Color.LIGHTBLUE;
-        }
-        if (block_code == 5) {
-            return Color.SANDYBROWN;
-        }
-        if (block_code == 6) {
-            return Color.SILVER;
-        }
-        return Color.PURPLE;
+
+        return image;
     }
 }

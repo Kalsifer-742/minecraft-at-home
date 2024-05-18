@@ -16,6 +16,10 @@ public class Inventory {
         return this.blocks.iterator();
     }
 
+    public int getSize() {
+        return blocks.size();
+    }
+
     public Block removeBlock(int index) throws IndexOutOfBoundsException {
         try {
             return this.blocks.remove(index);
@@ -24,8 +28,11 @@ public class Inventory {
         }
     }
 
-    public void addBlock(Block block) {
-        this.blocks.add(block);
-        this.blocks.sort(new AlphabeticalBlockComparator());
+    public void addBlock(Block block) throws InventoryIsFullException {
+        if (blocks.size() >= 8) {
+            throw new InventoryIsFullException();
+        }
+        blocks.add(block);
+        blocks.sort(new AlphabeticalBlockComparator());
     }
 }

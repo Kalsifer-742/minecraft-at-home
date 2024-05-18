@@ -6,6 +6,10 @@ import dev.kalsifer.minecraft.blocks.exceptions.BlockIsNotSmeltableException;
 import dev.kalsifer.minecraft.blocks.interfaces.Block;
 import dev.kalsifer.minecraft.game.Game;
 import dev.kalsifer.minecraft.gui.GUI;
+import dev.kalsifer.minecraft.gui.event_handlers.FurnaceBlockClickedEventHandler;
+import dev.kalsifer.minecraft.gui.event_handlers.InventaryBlockClickedEventHandler;
+import dev.kalsifer.minecraft.gui.event_handlers.MapBlockClickedEventHandler;
+import dev.kalsifer.minecraft.inventory.InventoryIsFullException;
 import dev.kalsifer.minecraft.map.Coordinate;
 import dev.kalsifer.minecraft.map.CoordinateOutOfBoundException;
 import javafx.scene.control.Alert;
@@ -19,10 +23,15 @@ public class MainController implements SimpleController {
     final MapController mapController;
     final FurnaceController furnaceController;
     final InventoryController inventoryController;
+    MapBlockClickedEventHandler mapBlockClickedEventHandler;
+    InventaryBlockClickedEventHandler inventaryBlockClickedEventHandler;
+    FurnaceBlockClickedEventHandler furnaceBlockClickedEventHandler;
 
     public MainController(Game game){
         this.game = game;
-        gui = new GUI(this);
+        mapBlockClickedEventHandler = new MapBlockClickedEventHandler(this);
+        inventaryBlockClickedEventHandler = new InventaryBlockClickedEventHandler(this);
+        gui = new GUI(mapBlockClickedEventHandler, inventaryBlockClickedEventHandler);
         controllerList = new ArrayList<>();
         mapController = new MapController(game.getMap(), gui.getMapPane());
         furnaceController = new FurnaceController(game.getFurnace(), gui.getFurnacePane());
@@ -67,14 +76,18 @@ public class MainController implements SimpleController {
     }
 
     public void moveFromFurnaceToInventory() {
-        game.moveFromFurnaceToInventory();
+        try {
+            game.moveFromFurnaceToInventory();
+        } catch (InventoryIsFullException e) {
+            new Alert(Alert.AlertType.WARNING, e.getMessage()).show();
+        }
         redraw();
     }
 
     public void pickUpBlock(Coordinate coord) {
         try {
             game.pickUpBlock(coord);
-        } catch (CoordinateOutOfBoundException | BlockIsNotPickableException e) {
+        } catch (CoordinateOutOfBoundException | BlockIsNotPickableException | InventoryIsFullException e) {
             new Alert(Alert.AlertType.WARNING, e.getMessage()).show();
         }
 

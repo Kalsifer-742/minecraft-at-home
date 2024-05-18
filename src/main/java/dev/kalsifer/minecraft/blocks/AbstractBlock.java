@@ -29,11 +29,6 @@ public class AbstractBlock implements Block {
     }
 
     @Override
-    public char display() {
-        return this.content;
-    }
-
-    @Override
     public String toString() {
         return this.blockName + " [" + this.content + "]";
     }

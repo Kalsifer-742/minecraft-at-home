@@ -22,8 +22,6 @@ public class Main extends Application {
 
         stage.setScene(scene);
         stage.setTitle("Minecraft at home");
-        stage.setMinWidth(800);
-        stage.setMinHeight(600);
         stage.show();
     }
 }
@@ -33,7 +31,5 @@ public class Main extends Application {
 - mining dei blocchi con cambio dell'opacità
 - possibilità di usare il pugno o il piccone
 - blocco torcia che funziona sulla sabbia
-- enchanting table
-- crafting
-- gestione dei blocchi come un enum che estende AbstractBlock
+- iteratori
  */

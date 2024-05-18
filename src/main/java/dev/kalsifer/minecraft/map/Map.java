@@ -23,7 +23,7 @@ public class Map {
         }
 
         Random rand = new Random();
-        for (int i = 0 ; i < 5; i++){
+        for (int i = 0 ; i < 15; i++){
             int x = rand.nextInt(this.size);
             int y = rand.nextInt(this.size);
             try {
