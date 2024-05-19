@@ -1,29 +1,33 @@
 package dev.kalsifer.minecraft.game;
 
+import dev.kalsifer.minecraft.blocks.AbstractBlock;
 import dev.kalsifer.minecraft.blocks.BlockFactory;
+import dev.kalsifer.minecraft.blocks.NullBlock;
 import dev.kalsifer.minecraft.blocks.exceptions.BlockIsNotPickableException;
 import dev.kalsifer.minecraft.blocks.exceptions.BlockIsNotSmeltableException;
 import dev.kalsifer.minecraft.blocks.interfaces.Block;
+import dev.kalsifer.minecraft.furnace.BlockIsNullException;
 import dev.kalsifer.minecraft.furnace.Furnace;
 import dev.kalsifer.minecraft.blocks.interfaces.SmeltableBlock;
+import dev.kalsifer.minecraft.furnace.InputIsNotEmptyException;
+import dev.kalsifer.minecraft.furnace.OutputIsNotEmptyException;
 import dev.kalsifer.minecraft.inventory.Inventory;
 import dev.kalsifer.minecraft.inventory.InventoryIsFullException;
 import dev.kalsifer.minecraft.map.Coordinate;
 import dev.kalsifer.minecraft.map.CoordinateOutOfBoundException;
 import dev.kalsifer.minecraft.map.Map;
 
-import java.util.Collection;
-
 public class Game {
     final Map map;
     final Furnace furnace;
     final Inventory inventory;
+    Block clipboard;
 
     public Game() {
-        super();
-        this.map = new Map(8);
-        this.furnace = BlockFactory.furnaceBlock();
-        this.inventory = new Inventory();
+        map = new Map(8);
+        furnace = BlockFactory.furnaceBlock();
+        inventory = new Inventory();
+        clipboard = BlockFactory.nullBlock();
     }
 
     public Map getMap() {
@@ -38,25 +42,41 @@ public class Game {
         return inventory;
     }
 
-    public void insertBlockAtCoords(Coordinate coord, Block block) throws CoordinateOutOfBoundException {
-        this.map.insertBlockAtCoords(coord, block);
+    public Block getClipboard() {
+        return clipboard;
     }
 
-    public void smelt() {
+    public void moveBlockFromInventoryToClipboard(int index) throws IndexOutOfBoundsException{
+        clipboard = this.inventory.removeBlock(index);
+    }
+
+    public void placeBlockFromClipboard(Coordinate coord) throws CoordinateOutOfBoundException {
+        map.insertBlockAtCoords(coord, clipboard);
+        clipboard = BlockFactory.nullBlock();
+    }
+
+    public void smelt() throws BlockIsNullException, OutputIsNotEmptyException {
         this.furnace.smelt();
     }
 
-    public void moveFromInventoryToFurnace(int index) throws IndexOutOfBoundsException, BlockIsNotSmeltableException {
-        Block block = this.inventory.removeBlock(index);
-
-        if (!(block instanceof SmeltableBlock)) {
+    public void moveFromInventoryToFurnace(int index) throws IndexOutOfBoundsException, BlockIsNotSmeltableException, InputIsNotEmptyException {
+        if (!(furnace.getInput() instanceof NullBlock)){
+            throw new InputIsNotEmptyException();
+        }
+        if (!(this.inventory.getBlock(index) instanceof SmeltableBlock)) {
             throw new BlockIsNotSmeltableException();
         }
 
+        Block block = this.inventory.removeBlock(index);
         this.furnace.setInput((SmeltableBlock) block);
     }
 
-    public void moveFromFurnaceToInventory() throws InventoryIsFullException {
+    public void moveInputFromFurnaceToInventory() throws InventoryIsFullException, BlockIsNullException {
+        SmeltableBlock block = this.furnace.removeInput();
+        this.inventory.addBlock(block);
+    }
+
+    public void moveOutputFromFurnaceToInventory() throws InventoryIsFullException, BlockIsNullException {
         Block block = this.furnace.removeOutput();
         this.inventory.addBlock(block);
     }
@@ -66,7 +86,7 @@ public class Game {
             throw new InventoryIsFullException();
         }
 
-        Block block = map.removeBlockAtCoord(coord);
+        Block block = map.mineBlockAtCoord(coord);
 
         inventory.addBlock(block);
     }

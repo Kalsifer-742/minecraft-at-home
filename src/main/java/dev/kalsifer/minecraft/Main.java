@@ -27,9 +27,6 @@ public class Main extends Application {
 }
 
 /*
-- gui interagibile tramite click e non tramite bottoni
 - mining dei blocchi con cambio dell'opacità
 - possibilità di usare il pugno o il piccone
-- blocco torcia che funziona sulla sabbia
-- iteratori
  */

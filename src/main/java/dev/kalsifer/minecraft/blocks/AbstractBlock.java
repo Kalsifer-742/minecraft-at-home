@@ -1,16 +1,20 @@
 package dev.kalsifer.minecraft.blocks;
 
 import dev.kalsifer.minecraft.blocks.interfaces.Block;
+import dev.kalsifer.minecraft.tools.AbstractTool;
 
 public class AbstractBlock implements Block {
     protected String blockName;
-    protected char content;
     protected boolean fallsWithGravity;
     protected boolean blocksFallThrough;
     protected boolean pickable;
+    protected double hardness;
+    protected double life;
 
     public AbstractBlock() {
-        this.pickable = false;
+        pickable = false;
+        hardness = 0;
+        life = 0;
     }
 
     @Override
@@ -30,6 +34,6 @@ public class AbstractBlock implements Block {
 
     @Override
     public String toString() {
-        return this.blockName + " [" + this.content + "]";
+        return this.blockName;
     }
 }

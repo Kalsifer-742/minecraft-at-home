@@ -6,7 +6,6 @@ import dev.kalsifer.minecraft.blocks.interfaces.SmeltableBlock;
 public class SandBlock extends AbstractBlock implements SmeltableBlock {
     public SandBlock() {
         this.blockName = "Sand";
-        this.content = 's';
         this.fallsWithGravity = true;
         this.blocksFallThrough = false;
         this.pickable = true;

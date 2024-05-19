@@ -1,25 +1,28 @@
 package dev.kalsifer.minecraft.gui;
 
-import dev.kalsifer.minecraft.gui.event_handlers.InventaryBlockClickedEventHandler;
-import dev.kalsifer.minecraft.gui.event_handlers.MapBlockClickedEventHandler;
-import dev.kalsifer.minecraft.gui.panes.FurnacePane;
-import dev.kalsifer.minecraft.gui.panes.InventoryPane;
-import dev.kalsifer.minecraft.gui.panes.MapPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import dev.kalsifer.minecraft.gui.controllers.MainController;
+import dev.kalsifer.minecraft.gui.panes.*;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Group;
+import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
+import javafx.scene.layout.*;
+import javafx.scene.text.Text;
 
-public class GUI extends Pane {
+public class GUI extends BorderPane {
     final MapPane mapPane;
     final FurnacePane furnacePane;
     final InventoryPane inventoryPane;
+    ClipboardPane clipboardPane;
 
-    public GUI(MapBlockClickedEventHandler mapBlockClickedEventHandler, InventaryBlockClickedEventHandler inventaryBlockClickedEventHandler) {
+    public GUI(MainController mainController) {
         super();
 
-        mapPane = new MapPane(mapBlockClickedEventHandler);
-        furnacePane = new FurnacePane();
-        inventoryPane = new InventoryPane(inventaryBlockClickedEventHandler);
+        mapPane = new MapPane(mainController);
+        furnacePane = new FurnacePane(mainController);
+        inventoryPane = new InventoryPane(mainController);
+        clipboardPane = new ClipboardPane();
 
         draw();
     }
@@ -36,16 +39,30 @@ public class GUI extends Pane {
         return inventoryPane;
     }
 
+    public ClipboardPane getClipboardPane() { return clipboardPane; }
+
     public void draw() {
         VBox ui = new VBox();
         ui.setMaxWidth(128);
-        ui.setSpacing(32);
+        ui.setSpacing(16);
         ui.getChildren().addAll(furnacePane, inventoryPane);
+        setMargin(ui, new Insets(16));
 
-        HBox map_ui = new HBox();
-        map_ui.setSpacing(32);
-        map_ui.getChildren().addAll(mapPane, ui);
+        VBox commands = new VBox();
+        commands.getChildren().addAll(
+                new Text("Modifiers:"),
+                new Text("F: put items from inventory to furnace"),
+                new Text("P: put items from inventory to clipboard"),
+                new Text("P: place block from clipboard")
+        );
 
-        getChildren().add(map_ui);
+        HBox footer = new HBox();
+        footer.setSpacing(32);
+        footer.getChildren().addAll(commands, clipboardPane);
+        setMargin(footer, new Insets(16));
+
+        setCenter(mapPane);
+        setRight(ui);
+        setBottom(footer);
     }
 }

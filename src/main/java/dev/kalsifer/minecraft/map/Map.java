@@ -4,6 +4,7 @@ import dev.kalsifer.minecraft.blocks.exceptions.BlockIsNotPickableException;
 import dev.kalsifer.minecraft.blocks.*;
 import dev.kalsifer.minecraft.blocks.interfaces.Block;
 
+import javax.tools.Tool;
 import java.util.Random;
 
 public class Map {
@@ -54,7 +55,7 @@ public class Map {
         this.blocks[coord.x][coord.y - 1] = tmp;
     }
 
-    public Block removeBlockAtCoord(Coordinate coord) throws CoordinateOutOfBoundException, BlockIsNotPickableException {
+    public Block mineBlockAtCoord(Coordinate coord) throws CoordinateOutOfBoundException, BlockIsNotPickableException {
         if (!this.isCoordinateValid(coord)) {
             throw new CoordinateOutOfBoundException();
         } else if (!this.blocks[coord.x][coord.y].isPickable()) {

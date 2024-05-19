@@ -17,6 +17,6 @@ public class InventoryController implements SimpleController {
     @Override
     public void redraw() {
         inventoryPane.getChildren().clear();
-        inventoryPane.draw(this.inventory.getBlocksIterator());
+        inventoryPane.draw(inventory.getBlocksIterator());
     }
 }

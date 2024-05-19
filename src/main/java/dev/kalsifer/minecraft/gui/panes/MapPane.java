@@ -2,7 +2,6 @@ package dev.kalsifer.minecraft.gui.panes;
 
 import dev.kalsifer.minecraft.blocks.interfaces.Block;
 import dev.kalsifer.minecraft.gui.controllers.MainController;
-import dev.kalsifer.minecraft.gui.event_handlers.MapBlockClickedEventHandler;
 import dev.kalsifer.minecraft.map.Coordinate;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderStroke;
@@ -11,10 +10,19 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 
 public class MapPane extends GridPane {
-    public MapPane(MapBlockClickedEventHandler mapBlockClickedEventHandler) {
+    public MapPane(MainController mainController) {
         super();
 
-        this.setOnMouseClicked(mapBlockClickedEventHandler);
+        this.setOnMouseClicked(event -> {
+            int x = Math.ceilDiv((int) event.getX(), 64) - 1;
+            int y = 7 - (Math.ceilDiv((int) event.getY(), 64) - 1);
+
+            if (mainController.isPPressed()) {
+                mainController.placeBlockFromClipboard(new Coordinate(x, y));
+            } else {
+                mainController.pickUpBlock(new Coordinate(x, y));
+            }
+        });
     }
 
     public void draw(int size, Block[][] blocks) {

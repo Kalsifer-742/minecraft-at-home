@@ -8,7 +8,6 @@ public class RawIronBlock extends AbstractSolidBlock implements SmeltableBlock {
     public RawIronBlock() {
         super();
         this.blockName = "Raw Iron Block";
-        this.content = 'I';
     }
 
     @Override

@@ -2,6 +2,7 @@ package dev.kalsifer.minecraft.gui.panes;
 
 import dev.kalsifer.minecraft.blocks.*;
 import dev.kalsifer.minecraft.blocks.interfaces.IronBlockInterface;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -27,6 +28,9 @@ public class BlockPane extends StackPane {
         imageView.setPreserveRatio(true);
 
         getChildren().add(imageView);
+
+        Tooltip tooltip = new Tooltip(block.toString());
+        Tooltip.install(this, tooltip);
     }
 
     public Image getBlockTexture(Block block) {
@@ -44,8 +48,6 @@ public class BlockPane extends StackPane {
             image = new Image("file:assets/glass.png");
         } else if (block instanceof IronBlockInterface) {
             image = new Image("file:assets/iron_block.png");
-        } else if (block instanceof TorchBlock) {
-            image = new Image("file:assets/torch.png");
         } else {
             image = new Image("file:assets/empty_slot_ingot.png");
         }

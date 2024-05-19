@@ -20,6 +20,14 @@ public class Inventory {
         return blocks.size();
     }
 
+    public Block getBlock(int index) {
+        try {
+            return this.blocks.get(index);
+        } catch ( IndexOutOfBoundsException e ) {
+            throw new IndexOutOfBoundsException();
+        }
+    }
+
     public Block removeBlock(int index) throws IndexOutOfBoundsException {
         try {
             return this.blocks.remove(index);
