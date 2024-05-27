@@ -19,3 +19,11 @@ javafx {
 application {
     mainClass = "dev.kalsifer.minecraft.Main"
 }
+
+tasks.jar {
+    manifest {
+        attributes(
+            "Main-Class" to "dev.kalsifer.minecraft.Main"
+        )
+    }
+}

@@ -1,8 +1,8 @@
 package dev.kalsifer.minecraft;
 
-import dev.kalsifer.minecraft.game.Game;
-import dev.kalsifer.minecraft.gui.GUI;
-import dev.kalsifer.minecraft.gui.controllers.MainController;
+import dev.kalsifer.minecraft.model.Model;
+import dev.kalsifer.minecraft.view.View;
+import dev.kalsifer.minecraft.controller.Controller;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -15,18 +15,14 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) {
-        MainController mainController = new MainController(new Game());
-        GUI layout = mainController.getGui();
+        Controller mainController = new Controller(new Model());
+        View layout = mainController.getView();
 
         Scene scene = new Scene(layout);
 
         stage.setScene(scene);
         stage.setTitle("Minecraft at home");
+        stage.setResizable(false);
         stage.show();
     }
 }
-
-/*
-- mining dei blocchi con cambio dell'opacità
-- possibilità di usare il pugno o il piccone
- */
