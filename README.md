@@ -1,7 +1,7 @@
 # minecraft-at-home
 
-## TODO
+Project for the Programming 2 course at UniTN
 
-- [] mining blocks
-- [] packages organization as MVC
-- [] iterators
+- Java
+- OOP
+- GUI with JavaFX
